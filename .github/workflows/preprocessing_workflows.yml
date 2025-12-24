@@ -1,0 +1,37 @@
+name: Auto Preprocessing
+
+on:
+  push:
+    paths:
+      - 'raw_data/**'  # Jalan kalau ada update di data mentah
+
+jobs:
+  preprocess:
+    runs-on: ubuntu-latest
+    permissions:         # Penting biar bot bisa nge-push
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install Pandas Scikit-Learn
+      run: pip install pandas scikit-learn
+
+    - name: Run Preprocessing Script
+      # Asumsi kamu taruh data mentah di folder 'raw_data'
+      run: |
+        python preprocessing/automate_loan.py  --input raw_data/train_u6lujuX_CVtuZ9i.csv --output data_clean
+
+    - name: Commit & Push Clean Data
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add data_clean/
+        # Commit hanya jika ada perubahan
+        git commit -m "Auto-generated clean data" || echo "No changes to commit"
+        git push
