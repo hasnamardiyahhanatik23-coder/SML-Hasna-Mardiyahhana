@@ -3,7 +3,7 @@ name: Auto Preprocessing
 on:
   push:
     paths:
-      - 'raw_data/**'  # Jalan kalau ada update di data mentah
+      - 'dataset_raw/**'  # Jalan kalau ada update di data mentah
 
 jobs:
   preprocess:
@@ -25,7 +25,7 @@ jobs:
     - name: Run Preprocessing Script
       # Asumsi kamu taruh data mentah di folder 'raw_data'
       run: |
-        python preprocessing/automate_loan.py  --input raw_data/train_u6lujuX_CVtuZ9i.csv --output data_clean
+        python preprocessing/automate_loan.py  --input dataset_raw/train_u6lujuX_CVtuZ9i.csv --output data_clean
 
     - name: Commit & Push Clean Data
       run: |
