@@ -25,7 +25,7 @@ jobs:
     - name: Run Preprocessing Script
       # Asumsi kamu taruh data mentah di folder 'raw_data'
       run: |
-        python preprocessing/automate_loan.py  --input dataset_raw/train_u6lujuX_CVtuZ9i.csv --output data_clean
+        python preprocessing/automate_loan.py  --input dataset_raw/loanpred_raw.csv --output dataset_preprocessed
 
     - name: Commit & Push Clean Data
       run: |
