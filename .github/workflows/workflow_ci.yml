@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'dataset_raw/**'  # Jalan kalau ada update di data mentah
-
+      - 'preprocessing/**' #testing purpose
 jobs:
   preprocess:
     runs-on: ubuntu-latest
