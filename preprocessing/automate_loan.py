@@ -49,7 +49,7 @@ def process_data(input_path, output_dir):
     test_set.to_csv(os.path.join(output_dir, 'test_clean.csv'), index=False)
     print(f"Data bersih disimpan di folder: {output_dir}")
 
-if _name_ == "_main_":
+if _name_ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
