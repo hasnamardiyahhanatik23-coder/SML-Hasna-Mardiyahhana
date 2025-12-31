@@ -3,35 +3,37 @@ name: Auto Preprocessing
 on:
   push:
     paths:
-      - 'dataset_raw/**'  # Jalan kalau ada update di data mentah
-      - 'preprocessing/**' #testing purpose
+      - 'dataset_raw/**'
+      - 'preprocessing/**'
+
 jobs:
   preprocess:
     runs-on: ubuntu-latest
-    permissions:         # Penting biar bot bisa nge-push
+    permissions:
       contents: write
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
 
-    - name: Install Pandas Scikit-Learn
-      run: pip install pandas scikit-learn
+      - name: Install Pandas Scikit-Learn
+        run: pip install pandas scikit-learn
 
-    - name: Run Preprocessing Script
-      # Asumsi kamu taruh data mentah di folder 'raw_data'
-      run: |
-        python preprocessing/automate_loan.py  --input dataset_raw/loanpred_raw.csv --output dataset_preprocessed
+      - name: Run Preprocessing Script
+        run: |
+          python preprocessing/automate_loan.py --input dataset_raw/loanpred_raw.csv --output dataset_preprocessed
 
-    - name: Commit & Push Clean Data
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add data_clean/
-        # Commit hanya jika ada perubahan
-        git commit -m "Auto-generated clean data" || echo "No changes to commit"
-        git push
+      - name: Commit & Push Clean Data
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # add folder output yang bener
+          git add dataset_preprocessed/
+
+          git commit -m "Auto-generated clean data" || echo "No changes to commit"
+          git push
